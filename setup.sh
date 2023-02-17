@@ -4,3 +4,4 @@ sudo cp backend.py /usr/local/bin/backend && sudo chmod +x /usr/local/bin/backen
 sudo cp iTerm2_Backend.py /usr/local/bin/iTerm2_Backend && sudo chmod +x /usr/local/bin/iTerm2_Backend
 echo '[context]' >> ~/.pwn.conf
 echo 'terminal=["ancyterm","-t","iterm2","-e"]' >> ~/.pwn.conf
+echo 'arch="amd64"' >> ~/.pwn.conf
