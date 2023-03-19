@@ -10,15 +10,16 @@ def _apple_script_string_escape(s):
     return repr(tmp)[1:-1].replace('\\', '') # fix this bug
 
 
-def _iterm_exec(cmd1,cmd2):
+def _iterm_exec(cmd1,cmd2,cmd3):
     apple_script = '''tell application "iTerm2"
     tell current session of current window
         select split vertically with default profile
         write text "{}"
         write text "{}"
+        write text "{}"
     end tell
 end tell
-'''.format(_apple_script_string_escape(cmd1),_apple_script_string_escape(cmd2))
+'''.format(_apple_script_string_escape(cmd1),_apple_script_string_escape(cmd2),_apple_script_string_escape(cmd3))
     osascript.run(apple_script)
 
 def run(command1,command2):
@@ -41,11 +42,12 @@ def handle(conn:socket.socket,host,user):
     msg = recv(conn,size)
     js = json.loads(msg)
     print(js)
-    if js['terminal'] == 'iterm2':
-        cmd = js['exec']
-        cmd1 = f'ssh {user}@{host}'
-        cmd2 = f'{cmd}'
-        run(cmd1,cmd2)
+    cmd = js['exec']
+    path = js['path']
+    cmd1 = f'ssh {user}@{host}'
+    cmd2 = f'cd "{path}"'
+    cmd3 = f'{cmd}'
+    run(cmd1,cmd2,cmd3)
 
 def conn(host,port,user):
     addr = socket.getaddrinfo(host,port,0,0,socket.SOL_TCP)[0]

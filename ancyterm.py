@@ -4,7 +4,7 @@ import argparse
 import json
 import struct
 import socket
-
+import os
 
 def pack(num):
     return struct.pack('<I', num)
@@ -13,13 +13,12 @@ def pack(num):
 def main():
     parser = argparse.ArgumentParser('fake terminal that connects to outside world')
     parser.add_argument('-e', required=True, help='execute command in outside terminal')
-    parser.add_argument('-t', '--terminal', required=True, help='terminal execute command')
     args = parser.parse_args()
     cmd = args.e
 
     msg = {
         'exec': cmd,
-        'terminal': args.terminal
+        'path': os.path.abspath(os.curdir)
     }
     msg_json = json.dumps(msg)
     length = len(msg_json)
