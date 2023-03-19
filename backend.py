@@ -48,6 +48,7 @@ def handler(conn:socket.socket,fd:socket.socket):
 
 while True:
     conn, addr_ = sk.accept()
+    print('connect:',addr_)
     fd, addr_ = pipesk.accept()
     try:
         handler(conn,fd)
