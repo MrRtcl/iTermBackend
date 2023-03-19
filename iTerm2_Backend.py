@@ -22,8 +22,8 @@ end tell
 '''.format(_apple_script_string_escape(cmd1),_apple_script_string_escape(cmd2),_apple_script_string_escape(cmd3))
     osascript.run(apple_script)
 
-def run(command1,command2):
-    _iterm_exec(command1,command2)
+def run(command1,command2,command3):
+    _iterm_exec(command1,command2,command3)
 
 
 def unpack(data):
