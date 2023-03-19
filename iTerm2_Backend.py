@@ -67,11 +67,10 @@ def conn(host,port,user):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('fake terminal that connects to outside world')
     parser.add_argument('-s', '--server', required=True, help='server host')
-    parser.add_argument('-p', '--port', required=True, help='server port')
     parser.add_argument('-u', '--user', required=True, help='server user')
     args = parser.parse_args()
     host = args.server
-    port = int(args.port)
+    port = 15111
     user = args.user
     while True:
         try:
