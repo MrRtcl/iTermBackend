@@ -48,8 +48,10 @@ def handle(conn:socket.socket,host,user):
         run(cmd1,cmd2)
 
 def conn(host,port,user):
-    sk = socket.socket()
-    sk.connect((host, port))
+    addr = socket.getaddrinfo(host,port,0,0,socket.SOL_TCP)[0]
+    sk = socket.socket(addr[0],addr[1],addr[2])
+    host_tuple = addr[4]
+    sk.connect(host_tuple)
     while True:
         data = recv(sk,5)
         print(data)

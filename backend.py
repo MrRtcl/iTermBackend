@@ -8,7 +8,7 @@ socketName = '/tmp/iTerm2Socket'
 if(os.access(socketName,os.F_OK)):
     os.unlink(socketName)
 
-sk = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+sk = socket.socket(socket.AF_INET6,socket.SOCK_STREAM)
 sk.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 sk.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
 sk.bind(('0.0.0.0', 15111))
