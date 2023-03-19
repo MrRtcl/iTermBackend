@@ -8,7 +8,7 @@ socketName = '/tmp/iTerm2Socket'
 if(os.access(socketName,os.F_OK)):
     os.unlink(socketName)
 
-if socket.has_ipv6():
+if socket.has_ipv6:
     sk = socket.socket(socket.AF_INET6,socket.SOCK_STREAM)
     sk.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_V6ONLY, 0)
 else:
