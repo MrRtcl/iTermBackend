@@ -12,6 +12,8 @@ Type=simple
 User=`whoami`
 ExecStart=/usr/local/bin/backend
 Restart=on-failure
+StandardOutput=journal
+StandardError=journal
 
 [Install]
 WantedBy=multi-user.target" > ./backend.service
