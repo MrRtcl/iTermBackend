@@ -10,7 +10,7 @@ After=network.target
 [Service]
 Type=simple
 User=`whoami`
-ExecStart=/usr/local/bin/backend > /var/log/backend
+ExecStart=/usr/local/bin/backend
 Restart=on-failure
 
 [Install]
