@@ -4,7 +4,7 @@ sudo cp backend.py /usr/local/bin/backend && sudo chmod +x /usr/local/bin/backen
 sudo cp iTerm2_Backend.py /usr/local/bin/iTerm2_Backend && sudo chmod +x /usr/local/bin/iTerm2_Backend
 echo '[context]' >> ~/.pwn.conf
 echo 'terminal=["ancyterm","-e"]' >> ~/.pwn.conf
-sudo echo "[Unit]
+echo "[Unit]
 Description=Backend Service
 After=network.target
 
@@ -15,5 +15,6 @@ ExecStart=/usr/local/bin/backend
 Restart=on-failure
 
 [Install]
-WantedBy=multi-user.target" > /etc/systemd/system/backend.service
+WantedBy=multi-user.target" > ./backend.service
+sudo cp ./backend.service /etc/systemd/system/
 sudo systemctl enable backend.service
