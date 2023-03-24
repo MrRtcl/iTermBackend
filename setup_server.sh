@@ -10,10 +10,8 @@ After=network.target
 [Service]
 Type=simple
 User=`whoami`
-ExecStart=/usr/local/bin/backend
+ExecStart=/usr/local/bin/backend > /var/log/backend
 Restart=on-failure
-StandardOutput=journal
-StandardError=journal
 
 [Install]
 WantedBy=multi-user.target" > ./backend.service
