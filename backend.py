@@ -30,20 +30,23 @@ def recv(fd,size):
         raise Exception
     return buf
 
+def send(fd,buf):
+    l = fd.send(buf)
+    if(l != len(buf)):
+        raise Exception
+    return l
 
 def handler(conn:socket.socket,fd:socket.socket):
     while True:
         buf = recv(fd,0x100)
         print(b'buf:'+buf)
-        conn.send(b'heart')
+        send(conn,b'heart')
         tmp = recv(conn,5)
         if(tmp != b'heart'):
-            fd.send(b'No')
+            send(fd,b'No')
             break
-        fd.send(b'Yes')
-        num = conn.send(buf)
-        if num != len(buf):
-            break
+        send(fd,b'Yes')
+        num = send(conn,buf)
 
 
 while True:
