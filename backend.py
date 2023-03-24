@@ -19,9 +19,9 @@ sk.bind(('', 15111))
 sk.listen()
 
 pipesk = socket.socket(socket.AF_UNIX,socket.SOCK_STREAM)
+pipesk.settimeout(5)
 pipesk.bind(socketName)
 pipesk.listen()
-
 
 def recv(fd:socket.socket,size):
     buf = fd.recv(size)
@@ -38,36 +38,37 @@ def send(fd:socket.socket,buf):
     return l
 
 def checkAlive(fd:socket.socket):
-    fd.settimeout(5)
+    ans = False
     try:
         send(fd,b'heart')
         tmp = recv(fd,5)
-        fd.settimeout(None)
         if(tmp != b'heart'):
-            return False
-        return True
-    except socket.timeout:
-        return False
+            ans = False
+        ans = True
+    except:
+        ans = False
+    return ans
+
 
 def handler(conn:socket.socket):
     while True:
-        fd, addr_ = pipesk.accept()
-        buf = recv(fd,0x100)
-        print(b'buf:'+buf)
-        if(checkAlive(conn)):
-            send(fd,b'Yes')
-            send(conn,buf)
-            fd.close()
-        else:
-            send(fd,b'No')
-            fd.close()
+        if(not checkAlive(conn)):
             break
+        try:
+            fd, addr_ = pipesk.accept()
+            buf = recv(fd,0x100)
+            send(conn,b'handl')
+            send(conn,buf)
+        except:
+            continue
 
 while True:
     conn, addr_ = sk.accept()
+    conn.settimeout(5)
     print('connect:',addr_)
     try:
         handler(conn)
     except Exception as e:
         print(e,e.args)
+    print('disconnect:',addr_)
     conn.close()

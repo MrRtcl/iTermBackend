@@ -27,9 +27,6 @@ def main():
     fd = socket.socket(socket.AF_UNIX,socket.SOCK_STREAM)
     fd.connect(pipeName)
     fd.send(protocol_msg)
-    tmp = fd.recv(5)
-    if(tmp == b'No'):
-        print('Connection error.Please check client.')
     fd.close()
 
 if __name__ == '__main__':

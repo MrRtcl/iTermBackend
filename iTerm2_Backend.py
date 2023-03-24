@@ -54,11 +54,13 @@ def conn(host,port,user):
     sk = socket.socket(addr[0],addr[1],addr[2])
     host_tuple = addr[4]
     sk.connect(host_tuple)
+    sk.settimeout(15)
     while True:
         data = recv(sk,5)
         print(data)
         if (data == b'heart'):
             sk.send(b'heart')
+        elif (data == b'handl'):
             handle(sk,host,user)
         else:
             break
