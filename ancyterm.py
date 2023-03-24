@@ -24,14 +24,12 @@ def main():
     length = len(msg_json)
     protocol_msg = pack(length) + msg_json.encode('latin-1')
     pipeName = '/tmp/iTerm2Socket'
-
     fd = socket.socket(socket.AF_UNIX,socket.SOCK_STREAM)
     fd.connect(pipeName)
-    while True:
-        fd.send(protocol_msg)
-        tmp = fd.recv(5)
-        if(tmp == b'Yes'):
-            break
+    fd.send(protocol_msg)
+    tmp = fd.recv(5)
+    if(tmp == b'No'):
+        print('Connection error.Please check client.')
     fd.close()
 
 if __name__ == '__main__':

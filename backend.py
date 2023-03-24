@@ -15,7 +15,6 @@ else:
     sk = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 sk.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 sk.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
-
 sk.bind(('', 15111))
 sk.listen()
 
@@ -38,26 +37,37 @@ def send(fd,buf):
     print(fd,b'send',buf,l)
     return l
 
-def handler(conn:socket.socket,fd:socket.socket):
+def checkAlive(fd:socket.socket):
+    fd.settimeout(5)
+    try:
+        send(fd,b'heart')
+        tmp = recv(fd,5)
+        fd.settimeout(None)
+        if(tmp != b'heart'):
+            return False
+        return True
+    except socket.timeout:
+        return False
+
+def handler(conn:socket.socket):
     while True:
+        fd, addr_ = pipesk.accept()
         buf = recv(fd,0x100)
         print(b'buf:'+buf)
-        send(conn,b'heart')
-        tmp = recv(conn,5)
-        if(tmp != b'heart'):
+        if(checkAlive(conn)):
+            send(fd,b'Yes')
+            send(conn,buf)
+            fd.close()
+        else:
             send(fd,b'No')
+            fd.close()
             break
-        send(fd,b'Yes')
-        num = send(conn,buf)
-
 
 while True:
     conn, addr_ = sk.accept()
     print('connect:',addr_)
-    fd, addr_ = pipesk.accept()
     try:
-        handler(conn,fd)
+        handler(conn)
     except Exception as e:
         print(e,e.args)
     conn.close()
-    fd.close()
