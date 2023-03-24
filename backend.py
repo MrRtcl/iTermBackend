@@ -23,18 +23,18 @@ pipesk.bind(socketName)
 pipesk.listen()
 
 
-def recv(fd,size):
+def recv(fd:socket.socket,size):
     buf = fd.recv(size)
     if(buf == b''):
         raise Exception
-    print(fd,b'recv',buf,len(buf))
+    print(fd.family,b'recv',buf,len(buf))
     return buf
 
-def send(fd,buf):
+def send(fd:socket.socket,buf):
     l = fd.send(buf)
     if(l != len(buf)):
         raise Exception
-    print(fd,b'send',buf,l)
+    print(fd.family,b'send',buf,l)
     return l
 
 def checkAlive(fd:socket.socket):
