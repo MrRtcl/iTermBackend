@@ -28,12 +28,14 @@ def recv(fd,size):
     buf = fd.recv(size)
     if(buf == b''):
         raise Exception
+    print(fd,b'recv',buf,len(buf))
     return buf
 
 def send(fd,buf):
     l = fd.send(buf)
     if(l != len(buf)):
         raise Exception
+    print(fd,b'send',buf,l)
     return l
 
 def handler(conn:socket.socket,fd:socket.socket):
