@@ -53,6 +53,7 @@ def checkAlive(fd:socket.socket):
 
 def checkCmdAlive(buf):
     try:
+        buf = buf[4:]
         js = json.loads(buf)
         now = time.time()
         old = js['time']
