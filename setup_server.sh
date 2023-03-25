@@ -1,5 +1,6 @@
 sudo cp ancyterm.py /usr/local/bin/ancyterm && sudo chmod +x /usr/local/bin/ancyterm
 sudo cp backend.py /usr/local/bin/backend && sudo chmod +x /usr/local/bin/backend
+sudo cp code.py /usr/local/bin/code && sudo chmod +x /usr/local/bin/code
 rm ~/.pwn.conf
 echo '[context]' >> ~/.pwn.conf
 echo 'terminal=["ancyterm","-e"]' >> ~/.pwn.conf
@@ -16,4 +17,6 @@ Restart=on-failure
 [Install]
 WantedBy=multi-user.target" > ./backend.service
 sudo cp ./backend.service /etc/systemd/system/
+sudo systemctl daemon-reload
 sudo systemctl enable backend.service
+sudo systemctl start backend.service
