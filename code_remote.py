@@ -5,6 +5,7 @@ import struct
 import socket
 import os
 import sys
+import time
 
 def pack(num):
     return struct.pack('<I', num)
@@ -17,7 +18,8 @@ def main():
         path = os.path.abspath(sys.argv[1])
     msg = {
         'type': 'code',
-        'path': path
+        'path': path,
+        'time': time.time()
     }
     msg_json = json.dumps(msg)
     length = len(msg_json)

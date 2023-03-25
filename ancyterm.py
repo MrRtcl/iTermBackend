@@ -5,6 +5,7 @@ import json
 import struct
 import socket
 import os
+import time
 
 def pack(num):
     return struct.pack('<I', num)
@@ -19,7 +20,8 @@ def main():
     msg = {
         'type': 'gdb',
         'exec': cmd,
-        'path': os.path.abspath(os.curdir)
+        'path': os.path.abspath(os.curdir),
+        'time': time.time()
     }
     msg_json = json.dumps(msg)
     length = len(msg_json)

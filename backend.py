@@ -2,6 +2,8 @@
 
 import os
 import socket
+import json
+import time
 
 socketName = '/tmp/iTerm2Socket'
 
@@ -49,6 +51,17 @@ def checkAlive(fd:socket.socket):
         ans = False
     return ans
 
+def checkCmdAlive(buf):
+    try:
+        js = json.loads(buf)
+        now = time.time()
+        old = js['time']
+        if(now - old >= 2):
+            return False
+    except :
+        return False
+    return True
+
 
 def handler(conn:socket.socket):
     while True:
@@ -57,6 +70,8 @@ def handler(conn:socket.socket):
         try:
             fd, addr_ = pipesk.accept()
             buf = recv(fd,0x100)
+            if(not checkCmdAlive(buf)):
+                continue
             send(conn,b'handl')
             send(conn,buf)
         except:
