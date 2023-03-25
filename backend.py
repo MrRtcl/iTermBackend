@@ -29,14 +29,12 @@ def recv(fd:socket.socket,size):
     buf = fd.recv(size)
     if(buf == b''):
         raise Exception
-    print(fd.family,b'recv',buf,len(buf))
     return buf
 
 def send(fd:socket.socket,buf):
     l = fd.send(buf)
     if(l != len(buf)):
         raise Exception
-    print(fd.family,b'send',buf,l)
     return l
 
 def checkAlive(fd:socket.socket):
@@ -55,8 +53,12 @@ def checkCmdAlive(buf):
     try:
         buf = buf[4:]
         js = json.loads(buf)
+        print('Get cmd:',js)
         now = time.time()
         old = js['time']
+        print('old time:',old)
+        print('now time:',now)
+        print('time:',now-old)
         if(now - old >= 2):
             return False
     except :
