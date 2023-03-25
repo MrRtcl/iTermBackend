@@ -1,0 +1,12 @@
+[Unit]
+Description=Backend Service
+After=network.target
+
+[Service]
+Type=simple
+User=chenchengxi
+ExecStart=/usr/local/bin/backend
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

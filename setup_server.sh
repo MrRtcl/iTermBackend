@@ -1,6 +1,6 @@
 sudo cp ancyterm.py /usr/local/bin/ancyterm && sudo chmod +x /usr/local/bin/ancyterm
 sudo cp backend.py /usr/local/bin/backend && sudo chmod +x /usr/local/bin/backend
-sudo cp code.py /usr/local/bin/code && sudo chmod +x /usr/local/bin/code
+sudo cp code_remote.py /usr/local/bin/vscode && sudo chmod +x /usr/local/bin/vscode
 rm ~/.pwn.conf
 echo '[context]' >> ~/.pwn.conf
 echo 'terminal=["ancyterm","-e"]' >> ~/.pwn.conf
