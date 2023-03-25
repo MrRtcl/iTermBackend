@@ -54,7 +54,11 @@ def handle(conn:socket.socket,host,user):
         path = js['path']
         cmd= f'code --folder-uri vscode-remote://ssh-remote+{host}{path}'
         os.system(cmd)
+
+reConnectCnt = 0
+MAX_RECONNECT_CNT = 5
 def conn(host,port,user):
+    global reConnectCnt
     addr = socket.getaddrinfo(host,port,0,0,socket.SOL_TCP)[0]
     sk = socket.socket(addr[0],addr[1],addr[2])
     host_tuple = addr[4]
@@ -63,12 +67,13 @@ def conn(host,port,user):
     while True:
         data = recv(sk,5)
         print(data)
+        reConnectCnt = 0
         if (data == b'heart'):
             sk.send(b'heart')
         elif (data == b'handl'):
             handle(sk,host,user)
         else:
-            break
+            raise Exception
     sk.close()
 
 if __name__ == '__main__':
@@ -83,7 +88,11 @@ if __name__ == '__main__':
         try:
             conn(host,port,user)
         except Exception as e:
+            reConnectCnt += 1
             print(e)
+        if reConnectCnt > MAX_RECONNECT_CNT:
+            print("Too many reconnet.")
+            break
         time.sleep(5)
 
         
