@@ -5,6 +5,7 @@ import argparse
 import struct
 import json
 import time
+import os
 def _apple_script_string_escape(s):
     tmp = repr(s)[1:-1].replace('"', '')
     return repr(tmp)[1:-1].replace('\\', '') # fix this bug
@@ -42,13 +43,17 @@ def handle(conn:socket.socket,host,user):
     msg = recv(conn,size)
     js = json.loads(msg)
     print(js)
-    cmd = js['exec']
-    path = js['path']
-    cmd1 = f'ssh {user}@{host}'
-    cmd2 = f'cd "{path}"'
-    cmd3 = f'{cmd}'
-    run(cmd1,cmd2,cmd3)
-
+    if(js['type']=='gdb'):
+        cmd = js['exec']
+        path = js['path']
+        cmd1 = f'ssh {user}@{host}'
+        cmd2 = f'cd "{path}"'
+        cmd3 = f'{cmd}'
+        run(cmd1,cmd2,cmd3)
+    elif(js['type']=='code'):
+        path = js['path']
+        cmd= f'code --folder-uri vscode-remote://ssh-remote+{host}{path}'
+        os.system(cmd)
 def conn(host,port,user):
     addr = socket.getaddrinfo(host,port,0,0,socket.SOL_TCP)[0]
     sk = socket.socket(addr[0],addr[1],addr[2])
