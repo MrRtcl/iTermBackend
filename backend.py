@@ -18,6 +18,8 @@ sk.bind(('', 15111))
 sk.listen()
 
 pipesk = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+pipesk.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+pipesk.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
 pipesk.settimeout(5)
 pipesk.bind(socketName)
 pipesk.listen()
