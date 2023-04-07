@@ -17,7 +17,7 @@ sk.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
 sk.bind(('', 15111))
 sk.listen()
 
-pipesk = socket.socket(socket.AF_UNIX,socket.SOCK_STREAM)
+pipesk = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 pipesk.settimeout(5)
 pipesk.bind(socketName)
 pipesk.listen()
