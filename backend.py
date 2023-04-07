@@ -5,10 +5,7 @@ import socket
 import json
 import time
 
-socketName = '/tmp/iTerm2Socket'
-
-if(os.access(socketName,os.F_OK)):
-    os.unlink(socketName)
+socketName = ('172.17.0.1', 15112)
 
 if socket.has_ipv6:
     sk = socket.socket(socket.AF_INET6,socket.SOCK_STREAM)

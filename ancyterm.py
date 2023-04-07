@@ -26,8 +26,8 @@ def main():
     msg_json = json.dumps(msg)
     length = len(msg_json)
     protocol_msg = pack(length) + msg_json.encode('latin-1')
-    pipeName = '/tmp/iTerm2Socket'
-    fd = socket.socket(socket.AF_UNIX,socket.SOCK_STREAM)
+    pipeName = ('172.17.0.1',15112)
+    fd = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
     fd.connect(pipeName)
     fd.send(protocol_msg)
     fd.close()
